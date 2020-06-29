@@ -1,0 +1,71 @@
+name: orange-app
+version: '5.0' 
+summary: Complete SoundCloud Desktop Applications 
+description: |
+  Orange is a complete SoundCloud Application for Linux Desktop. Orange have unique features which make it different from any other way you would browse SoundCloud.
+grade: stable  
+confinement: strict
+icon: snap/gui/icon.png
+base: core18
+
+architectures:
+  - build-on: amd64
+    run-on: amd64  
+
+apps:
+  orange-app:
+    command: desktop-launch orange
+    environment:
+       DISABLE_WAYLAND: 1
+       QT_QPA_PLATFORMTHEME: gtk3 
+    desktop: usr/share/applications/orange.desktop
+    plugs:
+        - avahi-observe
+        - browser-support
+        - camera
+        - desktop
+        - desktop-legacy
+        - gsettings
+        - home
+        - opengl
+        - audio-playback
+        - audio-record
+        - removable-media
+        - screen-inhibit-control
+        - u2f-devices
+        - unity7
+        - upower-observe
+        - x11
+        - hostname-control
+        - mount-observe
+        - network
+        - network-control
+        - network-observe
+        - network-bind
+        - wayland
+plugs:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
+  qt513:
+    interface: content
+    target: $SNAP/qt513
+    default-provider: qt513
+
+parts:
+  snap-launcher:
+     plugin: dump
+     source: snap_launcher/
+     override-build: |
+            snapcraftctl build
+            sed -i 's|Icon=.*|Icon=${SNAP}/meta/gui/icon.png|g' ${SNAPCRAFT_PART_SRC}/orange.desktop
+            cp -rf ${SNAPCRAFT_PART_SRC}/orange.desktop ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/orange.desktop

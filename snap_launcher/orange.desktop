@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+GenericName=Orange
+Name=Orange
+Type=Application
+Icon=${SNAP}/meta/gui/icon.png
+Keywords=Downloader;SoundCloud;Music;Sound
+Exec=orange %F
+Categories=Utility;Qt;Player;
+Terminal=false
+Name[en_US]=Orange
