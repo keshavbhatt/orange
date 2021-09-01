@@ -10,7 +10,9 @@ base: core18
 
 architectures:
   - build-on: amd64
-    run-on: amd64  
+    run-on: amd64
+      
+compression: lzo
 
 apps:
   orange-app:
